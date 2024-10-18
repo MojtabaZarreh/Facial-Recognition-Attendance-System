@@ -8,9 +8,6 @@ import time as t
 from datetime import *
 from scripts.face_detection import CaptureFace
 
-if not os.path.exists('image'):
-    os.makedirs('image')
-
 async def update_time(page, time_display):
     while True:
         current_time = datetime.now().strftime("%H:%M:%S")
@@ -32,8 +29,8 @@ def main(page: ft.Page):
     image_control = ft.Image(src='app/views/assets/sample.jpg', width=400, height=300, fit=ft.ImageFit.CONTAIN, border_radius=10)
 
     def on_button_click(e):
-        capture_face_instance = CaptureFace(page, image_control)
-        threading.Thread(target=capture_face_instance, args=(page, image_control)).start() 
+        capture_face_instance = CaptureFace(page, image_control, '')
+        threading.Thread(target=capture_face_instance, args=(page, image_control, '')).start() 
     
     time_display = ft.Text(
         datetime.now().strftime("%H:%M:%S"),

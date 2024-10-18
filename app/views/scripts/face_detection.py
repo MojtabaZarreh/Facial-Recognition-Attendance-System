@@ -3,15 +3,15 @@ import time as t
 import random
 
 class CaptureFace:
-    def __init__(self, page, image_control) -> None:
+    def __init__(self, page, image_control, typee) -> None:
         self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
         self.cap = cv2.VideoCapture(0)
         self.last_face_time = 0 
         self.capture_delay = 3  
         self.capturing = False  
-        self.capture_face(page, image_control)  
+        self.capture_face(page, image_control, typee)  
     
-    def capture_face(self ,page, image_control):
+    def capture_face(self ,page, image_control, typee):
         while True:
             ret, frame = self.cap.read()
             if not ret:
@@ -32,11 +32,14 @@ class CaptureFace:
                         cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
                     name = f'face{random.randint(0, 1000)}.jpg'
-                    cv2.imwrite(f'app/images/{name}', frame)
+                    img = cv2.resize(frame, (1024, 720))
+                    cv2.imwrite(f'app/images/{name}', img)
 
                     image_control.src = f'app/images/{name}'
                     page.update()
-                    self.capturing = False  
+                    self.capturing = False
+                    if typee == 'scan':
+                        break  
 
             for (x, y, w, h) in faces:
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
