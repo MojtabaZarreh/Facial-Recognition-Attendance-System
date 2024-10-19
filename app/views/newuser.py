@@ -1,6 +1,11 @@
 import flet as ft
+import pathlib
 from scripts.face_detection import CaptureFace
-import threading
+import os, sys
+sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]))
+from app.database.db import DB
+from app.services.deepface_api import add_user_face
+from app.models.employees import Employee
 
 def main(page: ft.Page):
     page.title = "افزودن کاربر جدید"
@@ -11,13 +16,65 @@ def main(page: ft.Page):
     page.fonts = {
         "Vazir": "assets/fonts/Vazir.ttf",
     }
+    
+    dlg = ft.AlertDialog(
+        # modal=True,
+        title=ft.Text(
+            "عملیات موفق",
+            style=ft.TextStyle(color=ft.colors.GREEN, size=24, weight=ft.FontWeight.BOLD),
+            text_align=ft.TextAlign.CENTER,
+        ),
+        content=ft.Column(
+            [
+                ft.Icon(name=ft.icons.CHECK_CIRCLE_OUTLINE, color=ft.colors.GREEN, size=80),
+                ft.Text(
+                    ".کاربر با موفقیت افزوده شد",
+                    style=ft.TextStyle(size=18, color=ft.colors.BLACK87),
+                    text_align=ft.TextAlign.CENTER,
+                ),
+            ],
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            # spacing=20,
+            width=80,
+            height=100
+        ),
+        actions=[
+            ft.ElevatedButton(
+                "باشه",
+                on_click=lambda e: page.close(dlg),
+                style=ft.ButtonStyle(
+                    bgcolor=ft.colors.GREEN,
+                    color=ft.colors.WHITE,
+                    shape=ft.RoundedRectangleBorder(radius=10),
+                    # padding=ft.EdgeInsets.symmetric(vertical=12, horizontal=24),
+                ),
+            ),
+        ],
+        actions_alignment=ft.MainAxisAlignment.CENTER, 
+        shape=ft.RoundedRectangleBorder(radius=20),  
+        bgcolor=ft.colors.WHITE,
+    )
+
+
+    
+    def newuser(e):
+        name = name_field.value
+        personnel_id = personnel_id_field.value
+        employee = Employee(name, personnel_id)
+        user_added = DB().AddUser(employee.name, employee.code)
+        if user_added:
+            face_added = add_user_face(image_control.src, personnel_id)
+            if face_added:
+                page.open(dlg)
+            else:
+                ...
+            
 
     page.theme = ft.Theme(font_family="Vazir")
     
-    
     login_button = ft.ElevatedButton(
-        "ورود", 
-        # on_click=login,
+        "ثبت کاربر", 
+        on_click=newuser,
         width=300,
         bgcolor=ft.colors.BLUE_500,
         color=ft.colors.WHITE,
@@ -44,7 +101,6 @@ def main(page: ft.Page):
 
     def on_capture_click(e):
         CaptureFace(page, image_control, 'scan')
-        # threading.Thread(target=capture_face_instance.capture).start()
 
     capture_button = ft.IconButton(on_click=on_capture_click,
                            icon=ft.icons.ADD_A_PHOTO,
