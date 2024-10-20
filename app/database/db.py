@@ -16,7 +16,7 @@ class DB():
             self.cursor.execute('''INSERT INTO employees (name, code) VALUES (%s, %s)''', (name, code))
             self.mydb.commit()
             return True
-        except mysql.connector.Error as err:
+        except mysql.connector.Error:
             return False
         finally:
             if self.mydb.is_connected():
