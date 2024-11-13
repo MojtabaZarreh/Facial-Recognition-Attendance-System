@@ -14,15 +14,15 @@ class NewUser():
         if self.name_field != "" and self.personnel_id_field != "":
             employee = Employee(self.name_field, self.personnel_id_field)
             try:
-                user_added = DB().AddUser(employee.name, employee.code)
-                if not user_added:
-                    return False
                 face_added = add_user_face(self.image_control, self.personnel_id_field)
-                if not face_added:
+                if face_added:
+                    user_added = DB().AddUser(employee.name, employee.code)
+                    if user_added:
+                        return True
+                else:
                     return False
-                return True
             except Exception as ex:
-                # print(f"Error occurred: {ex}")
+                print(f"Error occurred: {ex}")
                 return False
         else:
             return False
