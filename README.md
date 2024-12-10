@@ -11,3 +11,11 @@ https://github.com/fdbtrs/SFace-Privacy-friendly-and-Accurate-Face-Recognition-u
 
 
 ![photo1733821987](https://github.com/user-attachments/assets/ff72d726-fd29-409f-9e28-95231eb0a06d)
+
+
+Initially, I use OpenCV to recognize the user's face, and as soon as it's detected, I send it to the container for processing. If the face has been previously registered, the result is sent back to the application in the form of the personnel code.
+The received personnel code is then checked in the database. If it exists, the name of the individual along with a welcome message is displayed, and their entry or exit time is logged in the database table.
+If the user is not defined or not recognized, an error message will be displayed.
+This system also allows for user registration. In this case, the user's face image along with their personnel code is sent to our container and simultaneously stored in the database.
+Additionally, the system supports generating attendance reports, deleting, displaying, and editing the registered users. A simple authentication mechanism has also been implemented for accessing the application.
+
