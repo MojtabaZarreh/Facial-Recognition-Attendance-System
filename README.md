@@ -9,3 +9,5 @@ This part was implemented inside a Docker container and functions like an API. I
 
 https://github.com/fdbtrs/SFace-Privacy-friendly-and-Accurate-Face-Recognition-using-Synthetic-Data
 
+
+![photo1733821987](https://github.com/user-attachments/assets/ff72d726-fd29-409f-9e28-95231eb0a06d)
