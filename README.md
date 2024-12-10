@@ -19,3 +19,4 @@ If the user is not defined or not recognized, an error message will be displayed
 This system also allows for user registration. In this case, the user's face image along with their personnel code is sent to our container and simultaneously stored in the database.
 Additionally, the system supports generating attendance reports, deleting, displaying, and editing the registered users. A simple authentication mechanism has also been implemented for accessing the application.
 
+
