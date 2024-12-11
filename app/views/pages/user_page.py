@@ -163,7 +163,7 @@ class AddUser:
                 ),
             ),
             ft.IconButton(
-                on_click=lambda e: self.page.open(self.go_back(e)),
+                on_click=lambda e: self.go_back(e),
                 icon=ft.icons.ARROW_CIRCLE_LEFT_OUTLINED,
                 icon_color="Gray",
                 icon_size=50,

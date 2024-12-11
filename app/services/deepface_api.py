@@ -1,7 +1,10 @@
 import requests
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 def add_user_face(image_path, personnel_id):
-    url = "https://ad59-185-134-98-66.ngrok-free.app/newface"
+    url = f"{os.getenv('API')}/newface"
     files = {'file': open(image_path, 'rb')}
     data = {'name': personnel_id}
     response = requests.post(url, files=files, data=data)
@@ -11,7 +14,7 @@ def add_user_face(image_path, personnel_id):
         return False
     
 def predict_user_face(image_path):
-    url = "https://ad59-185-134-98-66.ngrok-free.app/predict"
+    url = f"{os.getenv('API')}/predict"
     files = {'file': open(image_path, 'rb')}
     response = requests.post(url, files=files)
     if response.status_code == 200:

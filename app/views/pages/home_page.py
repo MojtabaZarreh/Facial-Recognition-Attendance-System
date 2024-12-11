@@ -3,13 +3,10 @@ from flet import View
 import asyncio
 from datetime import datetime
 import threading
-# import PyThreadKiller
-from PyThreadKiller import *
 import os, sys
 sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]))
 from app.views.scripts.face_detection import *
 from app.views.scripts.iran_time import current_time
-
 
 class Home:
     def __init__(self, page):
@@ -55,6 +52,10 @@ class Home:
                     content=ft.Text("افزودن کاربر", style=ft.TextStyle(font_family="Vazir")),
                     on_click=lambda e: self.handle_click_newuser(),
                 ),
+                ft.CupertinoActionSheetAction(
+                    content=ft.Text("دریافت گزارش تردد", style=ft.TextStyle(font_family="Vazir")),
+                    on_click=lambda e: self.handle_click_log(e),
+                ),
             ],
         )
 
@@ -85,7 +86,8 @@ class Home:
         self.capture_button.text = "شروع ضبط چهره"
         self.capture_button.bgcolor = ft.colors.BLUE_500
         self.page.update()
-        self.capture_face_instance.stop() 
+        if getattr(self, "capture_face_instance", None):
+            self.capture_face_instance.stop() 
         self.capturing = False  
  
     def run_update_time(self):
@@ -112,6 +114,35 @@ class Home:
         
     def handle_click_close(self, e):
         self.page.close(self.bottom_sheet)
+    
+    def handle_click_log(self, e):
+        DB().ExportLog()
+        alert = ft.AlertDialog(
+            title=ft.Text(
+                "دریافت شد",
+                style=ft.TextStyle(color=ft.colors.GREEN, size=24, weight=ft.FontWeight.BOLD),
+                text_align=ft.TextAlign.CENTER,
+            ),
+            content=ft.Column(
+                [
+                    ft.Icon(name=ft.icons.CHECK_CIRCLE_OUTLINE, color=ft.colors.GREEN, size=80),
+                    ft.Text(
+                        'گزارش در دسکتاپ شما ذخیره شد',
+                        style=ft.TextStyle(size=15, color=ft.colors.BLACK87),
+                        text_align=ft.TextAlign.CENTER,
+                    ),
+                ],
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                width=80,
+                height=120
+            ),
+            actions_alignment=ft.MainAxisAlignment.CENTER, 
+            shape=ft.RoundedRectangleBorder(radius=20),  
+            bgcolor=ft.colors.WHITE,
+        )
+        self.page.show_dialog(alert)
+        threading.Timer(2, lambda: self.page.close_dialog()).start()
+        
     
     def go_back(self, e):
         self.page.go('/')

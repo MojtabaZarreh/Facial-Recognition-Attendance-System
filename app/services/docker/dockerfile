@@ -1,0 +1,20 @@
+# Use an official Python runtime as a parent image
+FROM python:3.10
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Install necessary libraries for OpenCV
+RUN apt-get update && apt-get install -y libgl1-mesa-glx
+
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Install any needed packages specified in requirements.txt
+RUN pip install -r requirements.txt
+
+# Expose port 8000 to the world outside this container
+EXPOSE 8000
+
+# Run FastAPI server with Uvicorn
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

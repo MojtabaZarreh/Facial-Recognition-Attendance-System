@@ -1,0 +1,7 @@
+flet
+opencv-python
+python-dotenv
+mysql-connector-python
+bcrypt
+pytz
+jdatetime

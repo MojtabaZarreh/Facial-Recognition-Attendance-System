@@ -4,6 +4,7 @@ import random
 import os, sys
 import flet as ft
 import threading
+from dotenv import load_dotenv
 sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]))
 from app.services.deepface_api import predict_user_face
 from app.database.db import DB
@@ -11,11 +12,12 @@ import time as t
 
 class CaptureFace:
     def __init__(self, page, image_control, typee) -> None:
+        load_dotenv()
         self.page = page
         self.image_control = image_control
         self.typee = typee
         self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-        self.cap = cv2.VideoCapture(0)
+        self.cap = cv2.VideoCapture(int(os.getenv('SOURCE')))
         self.capture_delay = 3  
         self.last_face_time = 0  
         self.face_detected = False
@@ -76,8 +78,12 @@ class CaptureFace:
             if user:
                 self.show_alert(user[0][1], user[0][2])
                 DB().IoLog(user[0][2])
+                os.remove(img_path)
+                self.image_control.src = f'app/views/assets/1376-face-id.gif'
             else:
                 self.show_error()
+                os.remove(img_path)
+                self.image_control.src = f'app/views/assets/1376-face-id.gif'
                 
     def show_alert(self, name, code):
         alert = ft.AlertDialog(

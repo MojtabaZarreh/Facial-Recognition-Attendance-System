@@ -1,5 +1,8 @@
 import flet as ft
 from flet import View, colors
+import os, sys
+sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]))
+from app.views.scripts.check_admin import Admin
 
 class Login:
     def __init__(self, page):
@@ -33,14 +36,17 @@ class Login:
             "فراموشی رمز عبور؟", on_click=lambda _: print("فراموشی رمز عبور کلیک شد!"))
 
     def login(self, e):
-        if self.email_field.value == "user@example.com" and self.password_field.value == "12345":
-            self.page.snack_bar = ft.SnackBar(ft.Text("ورود موفقیت آمیز بود!"), bgcolor=ft.colors.GREEN)
-            self.page.go("/home")
+        if self.email_field.value != '' and self.password_field.value != '':
+            if Admin(mail=self.email_field.value, password=self.password_field.value).check():
+                self.page.snack_bar = ft.SnackBar(ft.Text("ورود موفقیت آمیز بود"), bgcolor=ft.colors.GREEN)
+                self.page.go("/home")
+            else:
+                self.page.snack_bar = ft.SnackBar(ft.Text("ایمیل یا رمز عبور اشتباه است"), bgcolor=ft.colors.RED)
         else:
-            self.page.snack_bar = ft.SnackBar(ft.Text("ایمیل یا رمز عبور اشتباه است"), bgcolor=ft.colors.RED)
-            self.page.go("/home")
+            self.page.snack_bar = ft.SnackBar(ft.Text("لطفا اطلاعات رو کامل وارد کنید"), bgcolor=ft.colors.RED)
         self.page.snack_bar.open = True
         self.page.update()
+                 
 
     def get_view(self):
         return View(

@@ -18,6 +18,7 @@ class NewUser():
                 if face_added:
                     user_added = DB().AddUser(employee.name, employee.code)
                     if user_added:
+                        # os.remove(self.image_control)
                         return True
                 else:
                     return False
