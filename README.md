@@ -29,5 +29,24 @@ The process of creating a new user is as follows:
 
 https://github.com/user-attachments/assets/550b4c72-4c8d-47a6-80a7-ac12a39960b8
 
+# How to Use and Run the Project:
+Install the required dependencies using the requirements.txt file:
+
+bash
+Copy code
+pip install -r requirements.txt
+Configure and set up the database. Ensure all database-related configurations are correctly applied.
+
+Review and modify the .env file if necessary to match your environment settings.
+
+Finally, run the main.py file to start the application:
+
+bash
+Copy code
+python main.py
+Default Login Credentials:
+Email: mojtabazarreh@yahoo.com
+Password: zarmoj123
+
 
 
