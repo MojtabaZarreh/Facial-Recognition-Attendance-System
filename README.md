@@ -20,3 +20,7 @@ This system also allows for user registration. In this case, the user's face ima
 Additionally, the system supports generating attendance reports, deleting, displaying, and editing the registered users. A simple authentication mechanism has also been implemented for accessing the application.
 
 
+Uploading Recording 2024-12-10 132710 (online-video-cutter.com).mp4…
+
+
+
