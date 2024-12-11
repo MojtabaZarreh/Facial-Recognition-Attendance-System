@@ -44,4 +44,8 @@ https://github.com/user-attachments/assets/550b4c72-4c8d-47a6-80a7-ac12a39960b8
    ```bash
    python main.py
 
+### Default Login Credentials:
+Email: mojtabazarreh@yahoo.com
+Password: zarmoj123
+
 
