@@ -24,4 +24,10 @@ Additionally, the system supports generating attendance reports, deleting, displ
 https://github.com/user-attachments/assets/4a823980-5671-4fdb-af1d-68d764ce550f
 
 
+The process of creating a new user is as follows:
+
+
+https://github.com/user-attachments/assets/550b4c72-4c8d-47a6-80a7-ac12a39960b8
+
+
 
