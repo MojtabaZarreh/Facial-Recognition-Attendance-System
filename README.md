@@ -36,4 +36,12 @@ https://github.com/user-attachments/assets/550b4c72-4c8d-47a6-80a7-ac12a39960b8
    ```bash
    pip install -r requirements.txt
 
+2. Configure and set up the database. Ensure all database-related configurations are correctly applied.
+
+3. Review and modify the .env file if necessary to match your environment settings.
+
+4. Finally, run the main.py file to start the application:
+   ```bash
+   python main.py
+
 
